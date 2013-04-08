@@ -80,4 +80,4 @@ if __name__ == '__main__':
 	writer = csv.DictWriter(open('geocoded-sample.csv', 'w'), fieldnames=reader.fieldnames+['latitude', 'longitude'])
 	writer.writeheader()
 	
-	batch_geocode_csv(reader, process_func=lambda r, j: write_csv(writer, r, j), address_func=lambda x: x['address'])
+	batch_geocode_csv(reader, writer, address_func=lambda x: x['address'])

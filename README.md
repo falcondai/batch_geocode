@@ -14,7 +14,7 @@ Uses
 The library contains a convenient script to geocode a CSV.
 
 ``` bash
-$ python geocode_csv <in-csv-filename> [<out-csv-filename>]
+$ geocode_csv.py <in-csv-filename> [<out-csv-filename>]
 ```
 
 Examples
