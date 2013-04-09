@@ -1,5 +1,12 @@
 #!/usr/bin/python
 
+# batch_geocode.py
+# A python module to geocode addresses in batch via Google Geocoding API.
+#
+# Author: Falcon Dai
+# Date: 4/7/2013
+# License: MIT License
+
 import csv, json, time
 import urllib2 as ul
 

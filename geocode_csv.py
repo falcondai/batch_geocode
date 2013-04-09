@@ -1,5 +1,14 @@
 #!/usr/bin/python
 
+# geocode_csv.py
+#	A script to geocode the "address" column in a CSV and outputing the result
+# into a new CSV with "latitude" and "longitude" columns
+#
+# Author: Falcon Dai
+# Date: 4/7/2013
+# License: MIT License
+
+
 if __name__ == '__main__':
 	import sys, csv, time
 	from batch_geocode import batch_geocode_csv
