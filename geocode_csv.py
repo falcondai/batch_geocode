@@ -4,9 +4,8 @@ if __name__ == '__main__':
 	import sys, csv, time
 	from batch_geocode import batch_geocode_csv
 	
-	def write_csv_print(w, r, j):
-		write_csv(w, r, j)
-		print r['address']
+	def print_result(r, j):
+		print r['address'], j['status']
 	
 	if len(sys.argv) < 2:
 		print 'Usage: %s <in-csv-filename> [<out-csv-filename>]' % sys.argv[0]
@@ -23,7 +22,7 @@ if __name__ == '__main__':
 			r = csv.DictReader(ic)
 			w = csv.DictWriter(oc, r.fieldnames+['latitude', 'longitude'])
 			w.writeheader()
-			batch_geocode_csv(r, w)
+			batch_geocode_csv(r, w, process_func=print_result)
 	
 	l, dt = r.line_num - 1, time.time() - t0
-	print 'Done geocoding %d addresses in %.2fs, average %.2f/s' % (l, dt, l/dt)
+	print 'Done geocoding %d addresses in %.2fs, average %.2f geocode/s' % (l, dt, l/dt)

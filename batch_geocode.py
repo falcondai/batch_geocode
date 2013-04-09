@@ -54,13 +54,15 @@ def extract_latlong(j, i=0):
 	return {'latitude': j['results'][i]['geometry']['location']['lat'],
 		'longitude': j['results'][i]['geometry']['location']['lng']}
 		
-def write_csv(csv_writer, row, j, extract_func=extract_latlong):
+def write_csv(csv_writer, row, j, extract_func=extract_latlong, process_func=None):
 		if j['status'] == 'OK':
 			row.update(extract_func(j))
 		csv_writer.writerow(row)
+		if process_func:
+			process_func(row, j)
 
-def batch_geocode_csv(iterable, csv_writer, process_func, address_func=lambda x: x['address'], extract_func=extract_latlong, sleep=default_sleep, max_retry=0, max_time=0, limit=quota_request, use_cache=True):
-	batch_geocode(iterable, lambda r, j: write_csv(csv_writer, r, j, extract_func), address_func, sleep, max_retry, max_time, limit, use_cache)
+def batch_geocode_csv(iterable, csv_writer, process_func=None, address_func=lambda x: x['address'], extract_func=extract_latlong, sleep=default_sleep, max_retry=0, max_time=0, limit=quota_request, use_cache=True):
+	batch_geocode(iterable, lambda r, j: write_csv(csv_writer, r, j, extract_func, process_func), address_func, sleep, max_retry, max_time, limit, use_cache)
 		
 if __name__ == '__main__':
 	# example 0
@@ -68,9 +70,9 @@ if __name__ == '__main__':
 	places = ['North Pole', 'South Pole', 'Royal Observatory Greenwich']
 	
 	# implement a simple process function
-	# print out response jsons
+	# print out response jsons' status and location
 	def print_result(r, j):
-		print r['address'], j
+		print r, j['status'], extract_latlong(j)
 	
 	batch_geocode(places, process_func=print_result)
 	
@@ -80,4 +82,4 @@ if __name__ == '__main__':
 	writer = csv.DictWriter(open('geocoded-sample.csv', 'w'), fieldnames=reader.fieldnames+['latitude', 'longitude'])
 	writer.writeheader()
 	
-	batch_geocode_csv(reader, writer, address_func=lambda x: x['address'])
+	batch_geocode_csv(reader, writer, address_func=lambda x: x['address'], process_func=print_result)
