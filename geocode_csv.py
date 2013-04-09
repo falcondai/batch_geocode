@@ -35,3 +35,4 @@ if __name__ == '__main__':
 	
 	l, dt = r.line_num - 1, time.time() - t0
 	print 'Done geocoding %d addresses in %.2fs, average %.2f geocode/s' % (l, dt, l/dt)
+	print 'Saved to file: %s' % out_cn
