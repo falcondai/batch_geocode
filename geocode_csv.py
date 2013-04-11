@@ -20,7 +20,10 @@ if __name__ == '__main__':
 		print 'Usage: %s <in-csv-filename> [<out-csv-filename>]' % sys.argv[0]
 		exit(1)
 	
-	out_cn = 'geocoded-'+sys.argv[1]
+	if sys.argv[1].endswith('.csv'):
+		out_cn = sys.argv[1].replace('.csv', '.geocoded.csv')
+	else:
+		out_cn = sys.argv[1]+'.geocoded'
 	if len(sys.argv) > 2:
 		out_cn = sys.argv[2]
 	
