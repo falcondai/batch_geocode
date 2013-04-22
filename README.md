@@ -20,6 +20,8 @@ $ geocode_csv.py <in-csv-filename> [<out-csv-filename>]
 Examples
 --------
 ``` python
+from batch_geocode import batch_geocode, batch_geocode_csv
+
 # example 0
 # geocoding a list of places
 places = ['North Pole', 'South Pole', 'Royal Observatory Greenwich']
