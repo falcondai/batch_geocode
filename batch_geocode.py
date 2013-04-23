@@ -86,7 +86,16 @@ if __name__ == '__main__':
 	# example 1
 	# geocoding data stored in CSV
 	reader = csv.DictReader(open('sample.csv', 'r'))
-	writer = csv.DictWriter(open('geocoded-sample.csv', 'wb'), fieldnames=reader.fieldnames+['latitude', 'longitude'])
+	writer = csv.DictWriter(open('sample.geocoded.csv', 'wb'), fieldnames=reader.fieldnames+['latitude', 'longitude'])
 	writer.writeheader()
 	
 	batch_geocode_csv(reader, writer, address_func=lambda x: x['address'], process_func=print_result)
+	
+	# example 2
+	# geocoding data stored in CSV living at Google Drive
+	from urllib2 import urlopen
+	reader = csv.DictReader(urlopen('https://docs.google.com/spreadsheet/pub?key=0Ah73xeahAckPdHJrRktnZlAwUENfcHk5SFM1cXhoOHc&output=csv'))
+	writer = csv.DictWriter(open('chicago_redlight_cameras.geocoded.csv', 'wb'), fieldnames=reader.fieldnames+['latitude', 'longitude'])
+	writer.writeheader()
+	
+	batch_geocode_csv(reader, writer, address_func=lambda x: x['INTERSECTION']+', Chicago', process_func=print_result)
