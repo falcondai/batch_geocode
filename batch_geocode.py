@@ -86,7 +86,7 @@ if __name__ == '__main__':
 	# example 1
 	# geocoding data stored in CSV
 	reader = csv.DictReader(open('sample.csv', 'r'))
-	writer = csv.DictWriter(open('geocoded-sample.csv', 'w'), fieldnames=reader.fieldnames+['latitude', 'longitude'])
+	writer = csv.DictWriter(open('geocoded-sample.csv', 'wb'), fieldnames=reader.fieldnames+['latitude', 'longitude'])
 	writer.writeheader()
 	
 	batch_geocode_csv(reader, writer, address_func=lambda x: x['address'], process_func=print_result)

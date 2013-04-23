@@ -20,6 +20,7 @@ if __name__ == '__main__':
 		print 'Usage: %s <in-csv-filename> [<out-csv-filename>]' % sys.argv[0]
 		exit(1)
 	
+	# output csv file name
 	if sys.argv[1].endswith('.csv'):
 		out_cn = sys.argv[1].replace('.csv', '.geocoded.csv')
 	else:
@@ -30,7 +31,7 @@ if __name__ == '__main__':
 	t0 = time.time()
 	
 	with open(sys.argv[1], 'r') as ic:
-		with open(out_cn, 'w') as oc:
+		with open(out_cn, 'wb') as oc:
 			r = csv.DictReader(ic)
 			w = csv.DictWriter(oc, r.fieldnames+['latitude', 'longitude'])
 			w.writeheader()
